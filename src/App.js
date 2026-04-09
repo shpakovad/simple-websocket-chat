@@ -31,9 +31,8 @@ function App() {
 
                 if (data.type === 'system') {
                     setNewUsers(prev => {
-                        const newArr = [...prev, data.id];
-                        const filtered = Array.from(new Set(newArr))
-                        return filtered;
+                        const newArr = [...prev, data.message];
+                        return newArr;
                     });
                 }
                 if (data.type === 'system message') {
@@ -93,15 +92,14 @@ function App() {
                             <button type="submit" disabled={username.length === 0 || message.length === 0}>Send</button>
                         </form>
 
-                        <div className="chat">
-                            {Boolean(messageList.length) &&
-                                messageList.map((item, index) =>
+                        {Boolean(messageList.length) &&
+                            <div className="chat">
+                                {messageList.map((item, index) =>
                                     <div key={index} className="message-wrapper">
                                         <div className="message"><b>{item.user}</b>: {item.message}</div>
                                         <div className="date">{item.date}</div>
                                     </div>)}
-
-                        </div>
+                            </div>}
                     </>
                 }
             </div>
@@ -110,7 +108,7 @@ function App() {
                     {newUsers
                         .filter(item => item !== user)
                         .map((user) =>
-                            <div key={user}>{`User ${user} joined`}</div>)
+                            <div key={user}>{user}</div>)
                     }
                 </div>
             }
