@@ -76,9 +76,9 @@ function App() {
                 {
                     isConnected &&
                     <>
-                        {user && <div>Welcome, {user}</div>}
+                        {user && <div className="greeting">Welcome, {user}</div>}
 
-                        <form onSubmit={onSubmitForm}>
+                        <form onSubmit={onSubmitForm} className="form">
                             <input
                                 type="text"
                                 placeholder="Enter username"
@@ -96,9 +96,9 @@ function App() {
                         <div className="chat">
                             {Boolean(messageList.length) &&
                                 messageList.map((item, index) =>
-                                    <div key={index}>
-                                        <div><b>{item.user}</b>: {item.message}</div>
-                                        <div>{item.date}</div>
+                                    <div key={index} className="message-wrapper">
+                                        <div className="message"><b>{item.user}</b>: {item.message}</div>
+                                        <div className="date">{item.date}</div>
                                     </div>)}
 
                         </div>

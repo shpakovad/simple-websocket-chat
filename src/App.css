@@ -7,6 +7,53 @@
     justify-content: space-between;
 }
 
+.greeting {
+    font-weight: bold;
+    padding-bottom: 20px;
+}
+
+.form {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.form input {
+    margin-right: 10px;
+}
+
+.chat {
+    width: 80%;
+    margin: 0 auto;
+    border-radius: 8px;
+    border: 1px solid gray;
+    padding: 10px 10px 0 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-height: 65vh;
+    overflow: auto;
+}
+
+.message-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.message {
+    text-align: left;
+}
+
+.date {
+    text-align: right;
+    font-size: 12px;
+    color: gray;
+}
+
 .joined-users {
     width: 100%;
     display: flex;
