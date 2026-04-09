@@ -46,6 +46,11 @@ function App() {
             }
 
             wsRef.current = socket;
+
+            return () => {
+                wsRef.current = null;
+                socket.close();
+            }
         },
         []
     );
