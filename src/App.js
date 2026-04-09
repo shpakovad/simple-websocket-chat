@@ -1,4 +1,3 @@
-
 import {useEffect, useRef, useState} from 'react';
 import './App.css';
 
@@ -7,6 +6,13 @@ function App() {
     const [isConnected, setIsConnected] = useState(false);
     const [user, setUser] = useState(null);
     const [newUsers, setNewUsers] = useState([]);
+
+    const [username, setUsername] = useState('');
+    const [message, setMessage] = useState('');
+
+    const [messageList, setMessageList] = useState([]);
+
+
     const wsRef = useRef(null);
 
 
@@ -30,19 +36,75 @@ function App() {
                         return filtered;
                     });
                 }
+                if (data.type === 'system message') {
+                    setMessageList(
+                        data.messages.map(item => ({
+                            ...item,
+                            date: new Date(item.timestamp).toLocaleString(),
+                        }))
+                    );
+                }
             }
-
 
             wsRef.current = socket;
         },
         []
     );
 
-    console.log(newUsers)
+    const onSubmitForm = (e) => {
+        e.preventDefault();
+
+        if (wsRef.current?.readyState === 1) {
+            wsRef.current.send(
+                JSON.stringify(
+                    {
+                        user: username,
+                        message: message,
+                        timestamp: Date.now(),
+                        type: 'system message'
+                    }
+                ));
+        }
+
+        setMessage('');
+    }
+
     return (
         <div className="App">
-            {!isConnected && <div>Connection...</div>}
-            {isConnected && user && <div>Welcome, {user}</div>}
+            <div className="header">
+                {!isConnected && <div>Connection...</div>}
+                {
+                    isConnected &&
+                    <>
+                        {user && <div>Welcome, {user}</div>}
+
+                        <form onSubmit={onSubmitForm}>
+                            <input
+                                type="text"
+                                placeholder="Enter username"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}/>
+                            <input
+                                type="text"
+                                placeholder="Enter message"
+                                value={message}
+                                onChange={(e) => setMessage(e.target.value)}
+                            />
+                            <button type="submit" disabled={username.length === 0 || message.length === 0}>Send</button>
+                        </form>
+
+                        <div className="chat">
+                            {Boolean(messageList.length) &&
+                                messageList.map((item, index) =>
+                                    <div key={index}>
+                                        <div><b>{item.user}</b>: {item.message}</div>
+                                        <div>{item.date}</div>
+                                    </div>)}
+
+                        </div>
+                    </>
+                }
+            </div>
             {isConnected && Boolean(newUsers.length) &&
                 <div className="joined-users">
                     {newUsers
