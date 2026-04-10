@@ -20,7 +20,7 @@ wss.on('connection', (ws) => {
             client.send(JSON.stringify({
                 id: ws.id,
                 type: 'system',
-                message: `👤 User ${ws.id} joined`
+                message: `User ${ws.id} joined`
             }));
         }
     });
@@ -46,11 +46,11 @@ wss.on('connection', (ws) => {
                 client.send(JSON.stringify({
                     id: ws.id,
                     type: 'system',
-                    message: `👤 User ${ws.id} left`
+                    message: `User ${ws.id} left`
                 }));
             }
         });
     })
 });
 
-console.log('🚀 WebSocket сервер запущен на ws://localhost:3001');
+console.log('WebSocket сервер запущен на ws://localhost:3001');
