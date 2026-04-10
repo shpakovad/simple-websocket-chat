@@ -2,7 +2,7 @@
 
 # dependencies
 /node_modules
-.ideas/
+.idea/
 
 # testing
 /coverage
